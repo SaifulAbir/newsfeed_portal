@@ -103,8 +103,8 @@ class SettingsUpdateAPI(GenericAPIView, UpdateModelMixin):
         keyword_list = []
 
         if countries:
-            country_list = countries.split(',')
-            for country in country_list:
+            country_data = countries.split(',')
+            for country in country_data:
                 try:
                     country_obj = Country.objects.get(name=country)
                 except Country.DoesNotExist:
@@ -114,8 +114,8 @@ class SettingsUpdateAPI(GenericAPIView, UpdateModelMixin):
                     country_list.append(country_obj.id)
 
         if sources:
-            source_list = sources.split(',')
-            for source in source_list:
+            source_data = sources.split(',')
+            for source in source_data:
                 try:
                     source_obj = Source.objects.get(name=source)
                 except Source.DoesNotExist:
@@ -125,8 +125,8 @@ class SettingsUpdateAPI(GenericAPIView, UpdateModelMixin):
                     source_list.append(source_obj.id)
 
         if keywords:
-            keyword_list = keywords.split(',')
-            for keyword in keyword_list:
+            keyword_data = keywords.split(',')
+            for keyword in keyword_data:
                 try:
                     keyword_obj = Keyword.objects.get(name=keyword)
                 except Keyword.DoesNotExist:
