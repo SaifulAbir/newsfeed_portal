@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 # Create your models here.
 from django.db.models.signals import pre_save
@@ -45,6 +46,7 @@ class Settings(newsfeedPortalModel):
     countries = models.ManyToManyField('Country', blank=True, related_name='skill_set')
     sources = models.ManyToManyField('Source', blank=True, related_name='skill_set')
     keywords = models.ManyToManyField('Keyword', blank=True, related_name='skill_set')
+    user = models.ForeignKey(User, on_delete=models.PROTECT, related_name='settings')
 
     class Meta:
         verbose_name = strings_settings.SETTINGS_VERBOSE_NAME
