@@ -23,7 +23,7 @@ class Source(newsfeedPortalModel):
     class Meta:
         verbose_name = strings_settings.SOURCE_VERBOSE_NAME
         verbose_name_plural = strings_settings.SOURCE_VERBOSE_NAME_PLURAL
-        db_table = 'countries'
+        db_table = 'sources'
 
     def __str__(self):
         return self.name
@@ -35,7 +35,7 @@ class Keyword(newsfeedPortalModel):
     class Meta:
         verbose_name = strings_settings.KEYWORD_VERBOSE_NAME
         verbose_name_plural = strings_settings.KEYWORD_VERBOSE_NAME_PLURAL
-        db_table = 'countries'
+        db_table = 'keywords'
 
     def __str__(self):
         return self.name
