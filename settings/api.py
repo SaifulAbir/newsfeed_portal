@@ -1,5 +1,6 @@
 from rest_framework.generics import CreateAPIView, GenericAPIView
 from rest_framework.mixins import UpdateModelMixin
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK
 from newsfeed_portal.models import populate_user_info, populate_user_info_querydict
@@ -9,6 +10,7 @@ from rest_framework.utils import json
 
 
 class SettingsCreateAPI(CreateAPIView):
+    permission_classes = (IsAuthenticated,)
     serializer_class = SettingsSerializer
 
     def post(self, request, *args, **kwargs):
@@ -69,7 +71,8 @@ class SettingsCreateAPI(CreateAPIView):
         return Response(HTTP_200_OK)
 
 
-class SettingsUpdateView(GenericAPIView, UpdateModelMixin):
+class SettingsUpdateAPI(GenericAPIView, UpdateModelMixin):
+    permission_classes = (IsAuthenticated,)
     serializer_class = SettingsSerializer
 
     def get_queryset(self):
