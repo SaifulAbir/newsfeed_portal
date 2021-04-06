@@ -30,6 +30,15 @@ def populate_user_info(request, instance, is_changed):
         instance.created_from = get_user_address(request)
 
 
+def populate_user_info_querydict(request, data, is_changed):
+    if is_changed:
+        data['modified_by'] = request.user.id
+        data['modified_from'] = get_user_address(request)
+    else:
+        data['created_by'] = request.user.id
+        data['created_from'] = get_user_address(request)
+
+
 def get_user_address(request):
     http_header = request.META.get('HTTP_X_FORWARDED_FOR') if request.META.get('HTTP_X_FORWARDED_FOR') is not None else request.META.get('REMOTE_ADDR')
     return http_header
