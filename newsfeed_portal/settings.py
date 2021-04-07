@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'djoser',
     'settings',
-    'news'
+    'news',
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [

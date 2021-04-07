@@ -1,7 +1,8 @@
 import os
 from celery import Celery
-
 # set the default Django settings module for the 'celery' program.
+from celery.schedules import crontab
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'newsfeed_portal.settings')
 
 app = Celery('newsfeed_portal')
@@ -11,6 +12,14 @@ app = Celery('newsfeed_portal')
 # - namespace='CELERY' means all celery-related configuration keys
 #   should have a `CELERY_` prefix.
 app.config_from_object('django.conf:settings', namespace='CELERY')
+
+app.conf.beat_schedule = {
+    'fetch-every-10-minutes': {
+        'task': 'news.tasks.fetch_news',
+        'schedule': crontab(minute="*/10"), # a job is scheduled to run every 10 minutes
+        'args': ()
+    },
+}
 
 # Load task modules from all registered Django app configs.
 app.autodiscover_tasks()
