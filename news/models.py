@@ -6,10 +6,10 @@ from resources import strings_news
 
 class News(newsfeedPortalModel):
     headline = models.CharField(max_length=255, unique=True)
-    thumbnail = models.CharField(max_length=255)
-    source_of_news = models.CharField(max_length=50)
-    country_of_news = models.CharField(max_length=255)
-    news_url = models.CharField(max_length=255)
+    thumbnail = models.CharField(max_length=500)
+    source_of_news = models.CharField(max_length=100, null=True)
+    country_of_news = models.CharField(max_length=100)
+    news_url = models.CharField(max_length=500)
 
     class Meta:
         verbose_name = strings_news.NEWS_VERBOSE_NAME
