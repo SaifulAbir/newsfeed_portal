@@ -134,6 +134,13 @@ SENDGRID_API_KEY = "SG.cvBa-7vjRoulNBsNT6Neew.9JWPPQDnS2mp71ulBp-a-zZEgu1UttB0-T
 SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 
 
+DJOSER = {
+    'SERIALIZERS': {
+         'user_create': 'settings.serializers.UserRegistrationSerializer'
+    }
+}
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
