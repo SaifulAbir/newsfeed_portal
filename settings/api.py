@@ -1,3 +1,5 @@
+from django.db import IntegrityError
+from rest_framework import status, serializers
 from rest_framework.generics import CreateAPIView, GenericAPIView
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.permissions import IsAuthenticated
@@ -31,9 +33,12 @@ class SettingsCreateAPI(CreateAPIView):
         except KeyError:
             keywords = None
 
-        settings_obj = Settings(user_id=request.user.id)
-        populate_user_info(request, settings_obj, False)
-        settings_obj.save()
+        try:
+            settings_obj = Settings(user_id=request.user.id)
+            populate_user_info(request, settings_obj, False)
+            settings_obj.save()
+        except IntegrityError:
+            raise serializers.ValidationError("You have already added some information in your settings. Please update your settings.")
 
         if countries:
             country_list = countries.split(',')
@@ -68,7 +73,7 @@ class SettingsCreateAPI(CreateAPIView):
                 if keyword_obj:
                     settings_obj.keywords.add(keyword_obj)
 
-        return Response(HTTP_200_OK)
+        return Response(settings_data, status=status.HTTP_201_CREATED)
 
 
 class SettingsUpdateAPI(GenericAPIView, UpdateModelMixin):
