@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -128,6 +128,10 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
+
+EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+SENDGRID_API_KEY = "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"
+SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 
 
 # Internationalization

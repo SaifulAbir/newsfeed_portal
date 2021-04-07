@@ -1,7 +1,9 @@
+from django.core.mail import send_mail
 from django.db import models
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_save
 from newsfeed_portal.models import newsfeedPortalModel, populate_time_info
 from resources import strings_news
+from settings.models import Settings
 
 
 class News(newsfeedPortalModel):
@@ -20,4 +22,24 @@ class News(newsfeedPortalModel):
         return self.headline
 
 
+def after_news_save(sender, instance:News, *args, **kwargs):
+    settings_list = Settings.objects.all()
+    for each_user in settings_list:
+        country_list = each_user.countries.values_list('name', flat=True)
+        source_list = each_user.sources.values_list('name', flat=True)
+        keyword_list = each_user.keywords.values_list('name', flat=True)
+
+        if instance.country_of_news in country_list and instance.source_of_news in source_list:
+            for keyword in keyword_list:
+                if keyword in instance.headline:
+                    send_mail(
+                        'You have one new top headline in your newsfeed',
+                        'Here is the headline - '+instance.headline,
+                        'saiful.abir20@gmail.com',
+                        [each_user.user.email],
+                        fail_silently=False,
+                    )
+
+
 pre_save.connect(populate_time_info, sender=News)
+post_save.connect(after_news_save, sender=News)

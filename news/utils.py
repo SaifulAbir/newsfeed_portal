@@ -14,3 +14,6 @@ def fetch_top_headlines(country):
             news_obj = News(headline=each_news['title'], thumbnail=each_news['urlToImage'], source_of_news=each_news['source']['id'],
                             country_of_news=country, news_url=each_news['url'])
             news_obj.save()
+
+
+# def send_email_notification():
