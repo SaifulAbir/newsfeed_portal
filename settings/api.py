@@ -42,6 +42,7 @@ class SettingsCreateAPI(CreateAPIView):
         if countries:
             country_list = countries.split(',')
             for country in country_list:
+                country = country.strip()
                 try:
                     country_obj = Country.objects.get(name=country)
                 except Country.DoesNotExist:
@@ -53,6 +54,7 @@ class SettingsCreateAPI(CreateAPIView):
         if sources:
             source_list = sources.split(',')
             for source in source_list:
+                source = source.strip()
                 try:
                     source_obj = Source.objects.get(name=source)
                 except Source.DoesNotExist:
@@ -64,6 +66,7 @@ class SettingsCreateAPI(CreateAPIView):
         if keywords:
             keyword_list = keywords.split(',')
             for keyword in keyword_list:
+                keyword = keyword.strip()
                 try:
                     keyword_obj = Keyword.objects.get(name=keyword)
                 except Keyword.DoesNotExist:
@@ -109,6 +112,7 @@ class SettingsUpdateAPI(UpdateAPIView):
         if countries:
             country_data = countries.split(',')
             for country in country_data:
+                country = country.strip()
                 try:
                     country_obj = Country.objects.get(name=country)
                 except Country.DoesNotExist:
@@ -120,6 +124,7 @@ class SettingsUpdateAPI(UpdateAPIView):
         if sources:
             source_data = sources.split(',')
             for source in source_data:
+                source = source.strip()
                 try:
                     source_obj = Source.objects.get(name=source)
                 except Source.DoesNotExist:
@@ -131,6 +136,7 @@ class SettingsUpdateAPI(UpdateAPIView):
         if keywords:
             keyword_data = keywords.split(',')
             for keyword in keyword_data:
+                keyword = keyword.strip()
                 try:
                     keyword_obj = Keyword.objects.get(name=keyword)
                 except Keyword.DoesNotExist:
