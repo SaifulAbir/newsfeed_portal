@@ -1,13 +1,12 @@
 from django.db import IntegrityError
 from rest_framework import status, serializers
-from rest_framework.generics import CreateAPIView, GenericAPIView
-from rest_framework.mixins import UpdateModelMixin
+from rest_framework.generics import CreateAPIView, get_object_or_404, \
+    RetrieveAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.status import HTTP_200_OK
 from newsfeed_portal.models import populate_user_info, populate_user_info_querydict
 from settings.models import Settings, Country, Source, Keyword
-from settings.serializers import SettingsSerializer
+from settings.serializers import SettingsSerializer, SettingsDetailSerializer
 from rest_framework.utils import json
 
 
@@ -72,21 +71,21 @@ class SettingsCreateAPI(CreateAPIView):
                     keyword_obj.save()
                 if keyword_obj:
                     settings_obj.keywords.add(keyword_obj)
+        data = SettingsDetailSerializer(settings_obj, many=False).data
+        return Response(data, status=status.HTTP_201_CREATED)
 
-        return Response(settings_data, status=status.HTTP_201_CREATED)
 
-
-class SettingsUpdateAPI(GenericAPIView, UpdateModelMixin):
+class SettingsUpdateAPI(UpdateAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = SettingsSerializer
 
-    def get_queryset(self):
-        return Settings.objects.filter(user_id=self.request.user.id)
+    def get_object(self):
+        return get_object_or_404(Settings, user=self.request.user)
 
     def put(self, request, *args, **kwargs):
         req_data = request.data.copy()
         populate_user_info_querydict(request, req_data, True)
-
+        print(req_data['countries'])
         try:
             countries = req_data['countries']
         except KeyError:
@@ -146,5 +145,13 @@ class SettingsUpdateAPI(GenericAPIView, UpdateModelMixin):
         serializer = self.get_serializer(instance, data=req_data, partial=True)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
+        data = SettingsDetailSerializer(instance, many=False).data
+        return Response(data)
 
-        return Response(HTTP_200_OK)
+
+class SettingsDetailAPI(RetrieveAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = SettingsDetailSerializer
+
+    def get_object(self):
+        return get_object_or_404(Settings, user=self.request.user)
