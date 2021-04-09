@@ -22,6 +22,9 @@ After creating and activating the virtual environment run the following command 
 
 `pip install -r requirements.txt`
 
+| :heavy_check_mark:  By default sqlite3 will be used as a database but you can switch to mysql. For that you have to uncomment mysql configuration.|
+|--------------------------------------------------------------------------------------------------------------------------------------------------|
+
 Next to migrate run:
 
 `python manage.py migrate`
