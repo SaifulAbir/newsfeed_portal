@@ -14,9 +14,9 @@
 **For other operating systems, check the [Installation on pip documentation.](https://pip.pypa.io/en/stable/installing/)**
 
 ##### Install virtualenv and create venv and activate on Ubuntu and MacOS:
-``pip install virtualenv``
-``virtualenv -p python3 venv``
-``source venv/bin/activate``
+```pip install virtualenv```
+```virtualenv -p python3 venv```
+```source venv/bin/activate```
 
 After creating and activating the virtual environment run the following command to install all the packages.
 
@@ -420,6 +420,9 @@ Example Response:
 
 ``POST /auth/users/set_password/``
 
+| :heavy_check_mark:  Make sure you pass the bearer token in the authorization header before giving request|
+|----------------------------------------------------------------------------------------------------------|
+
 Example request and JSON input format:
 
 http://127.0.0.1:8000/auth/users/set_password/
@@ -430,3 +433,6 @@ http://127.0.0.1:8000/auth/users/set_password/
     "current_password": "pass876512"
 }
 ```
+**Run all tests with command:**
+
+``python manage.py test --verbosity 2``
