@@ -14,8 +14,8 @@
 **For other operating systems, check the [Installation on pip documentation.](https://pip.pypa.io/en/stable/installing/)**
 
 ##### Install virtualenv and create venv and activate on Ubuntu and MacOS:
-```pip install virtualenv```
-```virtualenv -p python3 venv```
+```pip install virtualenv```\
+```virtualenv -p python3 venv```\
 ```source venv/bin/activate```
 
 After creating and activating the virtual environment run the following command to install all the packages.
